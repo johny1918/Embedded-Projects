@@ -1,1 +1,0 @@
-stm32f4xx_hal::gpio::Pin<'D', 12, stm32f4xx_hal::gpio::Alternate<_, stm32f4xx_hal::gpio::OpenDrain>>

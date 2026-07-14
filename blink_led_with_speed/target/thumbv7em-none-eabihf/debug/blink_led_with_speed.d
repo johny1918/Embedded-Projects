@@ -1,1 +1,0 @@
-/home/john/Documents/RustProjects/Embedded\ Projects/blink_led_with_speed/target/thumbv7em-none-eabihf/debug/blink_led_with_speed: /home/john/Documents/RustProjects/Embedded\ Projects/blink_led_with_speed/src/main.rs
