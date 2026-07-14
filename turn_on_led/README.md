@@ -1,0 +1,1 @@
+The goal of this project is simply to turn on green led from STM32F407G
