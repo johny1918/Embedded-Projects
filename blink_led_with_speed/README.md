@@ -1,0 +1,1 @@
+This project was made to test how to toggle 2 leds at different clock speed.
