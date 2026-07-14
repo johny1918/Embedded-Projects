@@ -1,0 +1,14 @@
+/home/john/Documents/RustProjects/Embedded Projects/blink_led_with_speed/target/debug/deps/thiserror-b9ed33e1cd6723c6.d: /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/lib.rs /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/aserror.rs /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/display.rs /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/var.rs /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/private.rs /home/john/Documents/RustProjects/Embedded\ Projects/blink_led_with_speed/target/debug/build/thiserror-1d465c434026d30a/out/private.rs
+
+/home/john/Documents/RustProjects/Embedded Projects/blink_led_with_speed/target/debug/deps/libthiserror-b9ed33e1cd6723c6.rlib: /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/lib.rs /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/aserror.rs /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/display.rs /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/var.rs /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/private.rs /home/john/Documents/RustProjects/Embedded\ Projects/blink_led_with_speed/target/debug/build/thiserror-1d465c434026d30a/out/private.rs
+
+/home/john/Documents/RustProjects/Embedded Projects/blink_led_with_speed/target/debug/deps/libthiserror-b9ed33e1cd6723c6.rmeta: /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/lib.rs /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/aserror.rs /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/display.rs /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/var.rs /home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/private.rs /home/john/Documents/RustProjects/Embedded\ Projects/blink_led_with_speed/target/debug/build/thiserror-1d465c434026d30a/out/private.rs
+
+/home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/lib.rs:
+/home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/aserror.rs:
+/home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/display.rs:
+/home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/var.rs:
+/home/john/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/private.rs:
+/home/john/Documents/RustProjects/Embedded\ Projects/blink_led_with_speed/target/debug/build/thiserror-1d465c434026d30a/out/private.rs:
+
+# env-dep:OUT_DIR=/home/john/Documents/RustProjects/Embedded Projects/blink_led_with_speed/target/debug/build/thiserror-1d465c434026d30a/out
