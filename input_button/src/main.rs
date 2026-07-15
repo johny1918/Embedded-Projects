@@ -45,7 +45,7 @@ fn main() -> ! {
     let mut exti = peripherals.EXTI;
 
     // User button from board
-    let mut button = gpioa.pa0.into_input();
+    let mut button = gpioa.pa0.into_pull_down_input();
     // PD 15, blue led
     let mut led_blue = gpiod.pd15.into_push_pull_output();
 
