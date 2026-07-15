@@ -1,4 +1,6 @@
-#[derive(Debug, Clone, Copy)]
+use core::fmt;
+
+#[derive(Debug, Clone, Copy, defmt::Format)]
 pub enum LedState {
     Off,
     On,
@@ -21,6 +23,7 @@ impl LedState {
         }
     }
 }
+
 
 impl LedStateMachine {
     pub fn new(state: LedState) -> Self {

@@ -1,24 +1,21 @@
 #![no_std]
 #![no_main]
 
-mod peripherals;
 mod interrupts;
 mod led_state_machine;
-use crate::{led_state_machine::LedState, peripherals::Stm32f407gUtility};
+mod peripherals;
 use crate::interrupts::set_user_button_interrupt;
 use crate::led_state_machine::LedStateMachine;
+use crate::{led_state_machine::LedState, peripherals::Stm32f407gUtility};
 
-use core::sync::atomic::Ordering;
 use crate::interrupts::BUTTON_PRESSED;
+use core::sync::atomic::Ordering;
 
+use cortex_m_rt::entry;
 use defmt::info;
-use stm32f4xx_hal::hal::delay::DelayNs;
+use stm32f4xx_hal::{pac, prelude::*};
 use stm32f4xx_hal::timer::SysTimerExt;
 use {defmt_rtt as _, panic_probe as _};
-use cortex_m_rt::entry;
-use stm32f4xx_hal::pac;
-
-
 
 #[entry]
 fn main() -> ! {
@@ -28,53 +25,78 @@ fn main() -> ! {
     let mut utility = Stm32f407gUtility::new(peripherals.RCC);
     let mut current_state = LedStateMachine::new(LedState::Off);
 
-    let mut delay = core_functions.SYST.delay(&utility.rcc.clocks);
+    let mut blink_timer = core_functions.SYST.counter_us(&utility.rcc.clocks);
+    let mut debounce_timer = peripherals.TIM2.counter_ms(&mut utility.rcc);
+    let mut button_armed = true;
+
     // Get PIN for Button
     let gpioa = utility.get_gpio_x(peripherals.GPIOA);
     let gpiod = utility.get_gpio_x(peripherals.GPIOD);
     // Set button mode
-    let button = gpioa.pa0.into_pull_down_input();
+    let mut button = gpioa.pa0.into_pull_down_input();
 
     let mut led_red = gpiod.pd14.into_push_pull_output();
     // Set interrupt for USER button
-    set_user_button_interrupt(button, peripherals.SYSCFG, peripherals.EXTI, &mut utility.rcc);
-    
-  loop 
-  {
-    if BUTTON_PRESSED.load(Ordering::Acquire) 
-    {
-        // Șterge și evenimentele suplimentare produse de bounce.
-        BUTTON_PRESSED.store(false, Ordering::Release);
+    set_user_button_interrupt(
+        &mut button,
+        peripherals.SYSCFG,
+        peripherals.EXTI,
+        &mut utility.rcc,
+    );
 
-        current_state.next_state();
+    led_red.set_low();
 
-        info!("LED state changed");
+    loop {
+        // Logic to handle the button to be pressed only 1 time
+       if !button_armed && debounce_timer.wait().is_ok() {
+        if button.is_low() {
+            BUTTON_PRESSED.store(false, Ordering::Release);
+            button_armed = true;
+        } else {
+            debounce_timer.start(20.millis()).unwrap();
+        }
+}
+
+        if button_armed && BUTTON_PRESSED.swap(false, Ordering::AcqRel) {
+            button_armed = false;
+            debounce_timer.start(50.millis()).unwrap();
+
+            current_state.next_state();
+
+            match current_state.get_state() {
+                LedState::Off => {
+                    blink_timer.cancel().ok();
+                    led_red.set_low();
+                }
+
+                LedState::On => {
+                    blink_timer.cancel().ok();
+                    led_red.set_high();
+                }
+
+                LedState::FastBlink => {
+                    led_red.set_high();
+                    blink_timer.start(50.millis()).unwrap();
+                }
+
+                LedState::SlowBlink => {
+                    led_red.set_high();
+                    blink_timer.start(500.millis()).unwrap();
+                }
+            }
+
+            info!("LED state changed to {}", current_state.get_state());
+        }
+
+        match current_state.get_state() {
+            LedState::FastBlink | LedState::SlowBlink => {
+                if blink_timer.wait().is_ok() {
+                    led_red.toggle();
+                }
+            }
+
+            LedState::Off | LedState::On => {}
+        }
+
     }
-
-    match current_state.get_state() 
-    {
-        LedState::Off => {
-            led_red.set_low();
-            info!("Current state is OFF");
-        }
-        LedState::On => {
-            led_red.set_high();
-            info!("Current state is ON");
-        }
-        LedState::FastBlink => {
-            led_red.set_high();
-            delay.delay_ms(50);
-            led_red.set_low();
-            delay.delay_ms(50);
-            info!("Current state is FastBlink 50ms");
-        }
-        LedState::SlowBlink => {
-            led_red.set_high();
-            delay.delay_ms(500);
-            led_red.set_low();
-            delay.delay_ms(500);
-            info!("Current state is SlowBlink 500ms");
-        }
-    }
- }
 }

@@ -1,12 +1,7 @@
-use core::cell::Cell;
-
 use stm32f4xx_hal::{
     gpio::GpioExt,
-    hal::delay::DelayNs,
     pac,
     rcc::{Rcc, RccExt},
-    syscfg::SysCfgExt,
-    timer::SysTimerExt,
 };
 
 pub struct Stm32f407gUtility {

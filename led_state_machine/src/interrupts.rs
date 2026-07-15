@@ -1,5 +1,4 @@
-use core::sync::atomic::{AtomicBool, AtomicU8, Ordering};
-use defmt::info;
+use core::sync::atomic::{AtomicBool, Ordering};
 use stm32f4xx_hal::gpio::ExtiPin;
 use stm32f4xx_hal::{
     gpio::{Edge, Input, PA0},
@@ -21,7 +20,7 @@ fn EXTI0() {
 }
 
 pub fn set_user_button_interrupt(
-    mut button: PA0<Input>,
+    button: &mut PA0<Input>,
     syscfg: pac::SYSCFG,
     mut exti: pac::EXTI,
     rcc: &mut Rcc,
