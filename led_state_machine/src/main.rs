@@ -25,6 +25,7 @@ fn main() -> ! {
     let mut utility = Stm32f407gUtility::new(peripherals.RCC);
     let mut current_state = LedStateMachine::new(LedState::Off);
 
+    // Use non-blocking delay
     let mut blink_timer = core_functions.SYST.counter_us(&utility.rcc.clocks);
     let mut debounce_timer = peripherals.TIM2.counter_ms(&mut utility.rcc);
     let mut button_armed = true;
@@ -49,14 +50,14 @@ fn main() -> ! {
     loop {
         // Logic to handle the button to be pressed only 1 time
        if !button_armed && debounce_timer.wait().is_ok() {
-        if button.is_low() {
-            BUTTON_PRESSED.store(false, Ordering::Release);
-            button_armed = true;
-        } else {
-            debounce_timer.start(20.millis()).unwrap();
+            if button.is_low() {
+                BUTTON_PRESSED.store(false, Ordering::Release);
+                button_armed = true;
+            } else {
+                debounce_timer.start(20.millis()).unwrap();
+            }
         }
-}
-
+        
         if button_armed && BUTTON_PRESSED.swap(false, Ordering::AcqRel) {
             button_armed = false;
             debounce_timer.start(50.millis()).unwrap();
